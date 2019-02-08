@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DefuncionFetalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACTA_INSCRIPCION">
+          <Key>
+            <PropertyRef Name="ACTAINSCRIPCION" />
+          </Key>
+          <Property Name="ACTAINSCRIPCION" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="IDREGISTROCIVIL" Type="int" />
+          <Property Name="ID_FETAL" Type="int" />
+          <Property Name="CI_MADRE" Type="int" />
+          <Property Name="CI_MEDICO" Type="int" />
+          <Property Name="FECHAINSCRIPCION" Type="datetime" Nullable="false" />
+          <Property Name="FECHACRITICA" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DEF_FETAL">
+          <Key>
+            <PropertyRef Name="ID_FETAL" />
+          </Key>
+          <Property Name="ID_FETAL" Type="int" Nullable="false" />
+          <Property Name="ACTAINSCRIPCION" Type="varchar" MaxLength="40" />
+          <Property Name="SEXOFETO" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="SEMANAGESTA" Type="smallint" Nullable="false" />
+          <Property Name="FECHADEFUN" Type="datetime" Nullable="false" />
+          <Property Name="PRODUCTOEMBARA" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="ASISTENCIAFETAL" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="LUGAROCURRENCIA" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="NOMBREESTABLEFETAL" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="PROVINCIAFETAL" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="CANTONFETAL" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="PARROQUIAFETAL" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="LOCALIDADFETAL" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="CAUSAFETAL" Type="char" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MADRE">
+          <Key>
+            <PropertyRef Name="CI_MADRE" />
+          </Key>
+          <Property Name="CI_MADRE" Type="int" Nullable="false" />
+          <Property Name="NOMBREMADRE" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="NACIONALMADRE" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="FECHANACIMIMADRE" Type="datetime" Nullable="false" />
+          <Property Name="EDADMADRE" Type="int" Nullable="false" />
+          <Property Name="HIJOSVIVEN" Type="smallint" Nullable="false" />
+          <Property Name="HIJOSMUERTOSVIVEN" Type="smallint" Nullable="false" />
+          <Property Name="HIJOSMUERTOS" Type="smallint" Nullable="false" />
+          <Property Name="NUMCONTROLES" Type="int" Nullable="false" />
+          <Property Name="AUTOMADRE" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="ESTADOCIVIL" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="LECTURA" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="NIVELINSTRUCCIONMADRE" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="PROVINCIAMADRE" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="CANTONMADRE" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="PARROQUIAMADRE" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="CIUDADMADRE" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="DIREMADRE" Type="char" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MEDICO">
+          <Key>
+            <PropertyRef Name="CI_MEDICO" />
+          </Key>
+          <Property Name="CI_MEDICO" Type="int" Nullable="false" />
+          <Property Name="NOMBREMEDICO" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="NUMTELEMEDICO" Type="int" Nullable="false" />
+          <Property Name="FIRMAMEDICO" Type="image" Nullable="false" />
+          <Property Name="OBSERMEDICO" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REGISTROCIVIL">
+          <Key>
+            <PropertyRef Name="IDREGISTROCIVIL" />
+          </Key>
+          <Property Name="IDREGISTROCIVIL" Type="int" Nullable="false" />
+          <Property Name="DIRECCIONRESGISTRO" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="NOMBREREGISTRO" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="OFICINAREGISTRO" Type="int" Nullable="false" />
+          <Property Name="PARROQUIAREGISTRO" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="CANTONREGISTRO" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="PROVINCIAREGISTRO" Type="char" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ACTA_INS_RELATIONS_DEF_FETA">
+          <End Role="DEF_FETAL" Type="Self.DEF_FETAL" Multiplicity="0..1" />
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEF_FETAL">
+              <PropertyRef Name="ID_FETAL" />
+            </Principal>
+            <Dependent Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="ID_FETAL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACTA_INS_RELATIONS_MADRE">
+          <End Role="MADRE" Type="Self.MADRE" Multiplicity="0..1" />
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MADRE">
+              <PropertyRef Name="CI_MADRE" />
+            </Principal>
+            <Dependent Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="CI_MADRE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACTA_INS_RELATIONS_MEDICO">
+          <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="0..1" />
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEDICO">
+              <PropertyRef Name="CI_MEDICO" />
+            </Principal>
+            <Dependent Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="CI_MEDICO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACTA_INS_RELATIONS_REGISTRO">
+          <End Role="REGISTROCIVIL" Type="Self.REGISTROCIVIL" Multiplicity="0..1" />
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REGISTROCIVIL">
+              <PropertyRef Name="IDREGISTROCIVIL" />
+            </Principal>
+            <Dependent Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="IDREGISTROCIVIL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEF_FETA_RELATIONS_ACTA_INS">
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="0..1" />
+          <End Role="DEF_FETAL" Type="Self.DEF_FETAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="ACTAINSCRIPCION" />
+            </Principal>
+            <Dependent Role="DEF_FETAL">
+              <PropertyRef Name="ACTAINSCRIPCION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DefuncionFetalModelStoreContainer">
+          <EntitySet Name="ACTA_INSCRIPCION" EntityType="Self.ACTA_INSCRIPCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEF_FETAL" EntityType="Self.DEF_FETAL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MADRE" EntityType="Self.MADRE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MEDICO" EntityType="Self.MEDICO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REGISTROCIVIL" EntityType="Self.REGISTROCIVIL" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ACTA_INS_RELATIONS_DEF_FETA" Association="Self.FK_ACTA_INS_RELATIONS_DEF_FETA">
+            <End Role="DEF_FETAL" EntitySet="DEF_FETAL" />
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACTA_INS_RELATIONS_MADRE" Association="Self.FK_ACTA_INS_RELATIONS_MADRE">
+            <End Role="MADRE" EntitySet="MADRE" />
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACTA_INS_RELATIONS_MEDICO" Association="Self.FK_ACTA_INS_RELATIONS_MEDICO">
+            <End Role="MEDICO" EntitySet="MEDICO" />
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACTA_INS_RELATIONS_REGISTRO" Association="Self.FK_ACTA_INS_RELATIONS_REGISTRO">
+            <End Role="REGISTROCIVIL" EntitySet="REGISTROCIVIL" />
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DEF_FETA_RELATIONS_ACTA_INS" Association="Self.FK_DEF_FETA_RELATIONS_ACTA_INS">
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+            <End Role="DEF_FETAL" EntitySet="DEF_FETAL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DefuncionFetalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ACTA_INSCRIPCION">
+          <Key>
+            <PropertyRef Name="ACTAINSCRIPCION" />
+          </Key>
+          <Property Name="ACTAINSCRIPCION" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDREGISTROCIVIL" Type="Int32" />
+          <Property Name="ID_FETAL" Type="Int32" />
+          <Property Name="CI_MADRE" Type="Int32" />
+          <Property Name="CI_MEDICO" Type="Int32" />
+          <Property Name="FECHAINSCRIPCION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FECHACRITICA" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DEF_FETAL" Relationship="Self.FK_ACTA_INS_RELATIONS_DEF_FETA" FromRole="ACTA_INSCRIPCION" ToRole="DEF_FETAL" />
+          <NavigationProperty Name="MADRE" Relationship="Self.FK_ACTA_INS_RELATIONS_MADRE" FromRole="ACTA_INSCRIPCION" ToRole="MADRE" />
+          <NavigationProperty Name="MEDICO" Relationship="Self.FK_ACTA_INS_RELATIONS_MEDICO" FromRole="ACTA_INSCRIPCION" ToRole="MEDICO" />
+          <NavigationProperty Name="REGISTROCIVIL" Relationship="Self.FK_ACTA_INS_RELATIONS_REGISTRO" FromRole="ACTA_INSCRIPCION" ToRole="REGISTROCIVIL" />
+          <NavigationProperty Name="DEF_FETAL1" Relationship="Self.FK_DEF_FETA_RELATIONS_ACTA_INS" FromRole="ACTA_INSCRIPCION" ToRole="DEF_FETAL" />
+        </EntityType>
+        <EntityType Name="DEF_FETAL">
+          <Key>
+            <PropertyRef Name="ID_FETAL" />
+          </Key>
+          <Property Name="ID_FETAL" Type="Int32" Nullable="false" />
+          <Property Name="ACTAINSCRIPCION" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="SEXOFETO" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SEMANAGESTA" Type="Int16" Nullable="false" />
+          <Property Name="FECHADEFUN" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PRODUCTOEMBARA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ASISTENCIAFETAL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LUGAROCURRENCIA" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NOMBREESTABLEFETAL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PROVINCIAFETAL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CANTONFETAL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PARROQUIAFETAL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LOCALIDADFETAL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CAUSAFETAL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ACTA_INSCRIPCION" Relationship="Self.FK_ACTA_INS_RELATIONS_DEF_FETA" FromRole="DEF_FETAL" ToRole="ACTA_INSCRIPCION" />
+          <NavigationProperty Name="ACTA_INSCRIPCION1" Relationship="Self.FK_DEF_FETA_RELATIONS_ACTA_INS" FromRole="DEF_FETAL" ToRole="ACTA_INSCRIPCION" />
+        </EntityType>
+        <EntityType Name="MADRE">
+          <Key>
+            <PropertyRef Name="CI_MADRE" />
+          </Key>
+          <Property Name="CI_MADRE" Type="Int32" Nullable="false" />
+          <Property Name="NOMBREMADRE" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NACIONALMADRE" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FECHANACIMIMADRE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EDADMADRE" Type="Int32" Nullable="false" />
+          <Property Name="HIJOSVIVEN" Type="Int16" Nullable="false" />
+          <Property Name="HIJOSMUERTOSVIVEN" Type="Int16" Nullable="false" />
+          <Property Name="HIJOSMUERTOS" Type="Int16" Nullable="false" />
+          <Property Name="NUMCONTROLES" Type="Int32" Nullable="false" />
+          <Property Name="AUTOMADRE" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ESTADOCIVIL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LECTURA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NIVELINSTRUCCIONMADRE" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PROVINCIAMADRE" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CANTONMADRE" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PARROQUIAMADRE" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CIUDADMADRE" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DIREMADRE" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ACTA_INSCRIPCION" Relationship="Self.FK_ACTA_INS_RELATIONS_MADRE" FromRole="MADRE" ToRole="ACTA_INSCRIPCION" />
+        </EntityType>
+        <EntityType Name="MEDICO">
+          <Key>
+            <PropertyRef Name="CI_MEDICO" />
+          </Key>
+          <Property Name="CI_MEDICO" Type="Int32" Nullable="false" />
+          <Property Name="NOMBREMEDICO" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NUMTELEMEDICO" Type="Int32" Nullable="false" />
+          <Property Name="FIRMAMEDICO" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="OBSERMEDICO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ACTA_INSCRIPCION" Relationship="Self.FK_ACTA_INS_RELATIONS_MEDICO" FromRole="MEDICO" ToRole="ACTA_INSCRIPCION" />
+        </EntityType>
+        <EntityType Name="REGISTROCIVIL">
+          <Key>
+            <PropertyRef Name="IDREGISTROCIVIL" />
+          </Key>
+          <Property Name="IDREGISTROCIVIL" Type="Int32" Nullable="false" />
+          <Property Name="DIRECCIONRESGISTRO" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NOMBREREGISTRO" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="OFICINAREGISTRO" Type="Int32" Nullable="false" />
+          <Property Name="PARROQUIAREGISTRO" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CANTONREGISTRO" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PROVINCIAREGISTRO" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ACTA_INSCRIPCION" Relationship="Self.FK_ACTA_INS_RELATIONS_REGISTRO" FromRole="REGISTROCIVIL" ToRole="ACTA_INSCRIPCION" />
+        </EntityType>
+        <Association Name="FK_ACTA_INS_RELATIONS_DEF_FETA">
+          <End Role="DEF_FETAL" Type="Self.DEF_FETAL" Multiplicity="0..1" />
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEF_FETAL">
+              <PropertyRef Name="ID_FETAL" />
+            </Principal>
+            <Dependent Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="ID_FETAL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACTA_INS_RELATIONS_MADRE">
+          <End Role="MADRE" Type="Self.MADRE" Multiplicity="0..1" />
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MADRE">
+              <PropertyRef Name="CI_MADRE" />
+            </Principal>
+            <Dependent Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="CI_MADRE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACTA_INS_RELATIONS_MEDICO">
+          <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="0..1" />
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEDICO">
+              <PropertyRef Name="CI_MEDICO" />
+            </Principal>
+            <Dependent Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="CI_MEDICO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACTA_INS_RELATIONS_REGISTRO">
+          <End Role="REGISTROCIVIL" Type="Self.REGISTROCIVIL" Multiplicity="0..1" />
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REGISTROCIVIL">
+              <PropertyRef Name="IDREGISTROCIVIL" />
+            </Principal>
+            <Dependent Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="IDREGISTROCIVIL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEF_FETA_RELATIONS_ACTA_INS">
+          <End Role="ACTA_INSCRIPCION" Type="Self.ACTA_INSCRIPCION" Multiplicity="0..1" />
+          <End Role="DEF_FETAL" Type="Self.DEF_FETAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACTA_INSCRIPCION">
+              <PropertyRef Name="ACTAINSCRIPCION" />
+            </Principal>
+            <Dependent Role="DEF_FETAL">
+              <PropertyRef Name="ACTAINSCRIPCION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DefuncionFetalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACTA_INSCRIPCION" EntityType="Self.ACTA_INSCRIPCION" />
+          <EntitySet Name="DEF_FETAL" EntityType="Self.DEF_FETAL" />
+          <EntitySet Name="MADRE" EntityType="Self.MADRE" />
+          <EntitySet Name="MEDICO" EntityType="Self.MEDICO" />
+          <EntitySet Name="REGISTROCIVIL" EntityType="Self.REGISTROCIVIL" />
+          <AssociationSet Name="FK_ACTA_INS_RELATIONS_DEF_FETA" Association="Self.FK_ACTA_INS_RELATIONS_DEF_FETA">
+            <End Role="DEF_FETAL" EntitySet="DEF_FETAL" />
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACTA_INS_RELATIONS_MADRE" Association="Self.FK_ACTA_INS_RELATIONS_MADRE">
+            <End Role="MADRE" EntitySet="MADRE" />
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACTA_INS_RELATIONS_MEDICO" Association="Self.FK_ACTA_INS_RELATIONS_MEDICO">
+            <End Role="MEDICO" EntitySet="MEDICO" />
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACTA_INS_RELATIONS_REGISTRO" Association="Self.FK_ACTA_INS_RELATIONS_REGISTRO">
+            <End Role="REGISTROCIVIL" EntitySet="REGISTROCIVIL" />
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DEF_FETA_RELATIONS_ACTA_INS" Association="Self.FK_DEF_FETA_RELATIONS_ACTA_INS">
+            <End Role="ACTA_INSCRIPCION" EntitySet="ACTA_INSCRIPCION" />
+            <End Role="DEF_FETAL" EntitySet="DEF_FETAL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DefuncionFetalModelStoreContainer" CdmEntityContainer="DefuncionFetalEntities">
+          <EntitySetMapping Name="ACTA_INSCRIPCION">
+            <EntityTypeMapping TypeName="DefuncionFetalModel.ACTA_INSCRIPCION">
+              <MappingFragment StoreEntitySet="ACTA_INSCRIPCION">
+                <ScalarProperty Name="ACTAINSCRIPCION" ColumnName="ACTAINSCRIPCION" />
+                <ScalarProperty Name="IDREGISTROCIVIL" ColumnName="IDREGISTROCIVIL" />
+                <ScalarProperty Name="ID_FETAL" ColumnName="ID_FETAL" />
+                <ScalarProperty Name="CI_MADRE" ColumnName="CI_MADRE" />
+                <ScalarProperty Name="CI_MEDICO" ColumnName="CI_MEDICO" />
+                <ScalarProperty Name="FECHAINSCRIPCION" ColumnName="FECHAINSCRIPCION" />
+                <ScalarProperty Name="FECHACRITICA" ColumnName="FECHACRITICA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEF_FETAL">
+            <EntityTypeMapping TypeName="DefuncionFetalModel.DEF_FETAL">
+              <MappingFragment StoreEntitySet="DEF_FETAL">
+                <ScalarProperty Name="ID_FETAL" ColumnName="ID_FETAL" />
+                <ScalarProperty Name="ACTAINSCRIPCION" ColumnName="ACTAINSCRIPCION" />
+                <ScalarProperty Name="SEXOFETO" ColumnName="SEXOFETO" />
+                <ScalarProperty Name="SEMANAGESTA" ColumnName="SEMANAGESTA" />
+                <ScalarProperty Name="FECHADEFUN" ColumnName="FECHADEFUN" />
+                <ScalarProperty Name="PRODUCTOEMBARA" ColumnName="PRODUCTOEMBARA" />
+                <ScalarProperty Name="ASISTENCIAFETAL" ColumnName="ASISTENCIAFETAL" />
+                <ScalarProperty Name="LUGAROCURRENCIA" ColumnName="LUGAROCURRENCIA" />
+                <ScalarProperty Name="NOMBREESTABLEFETAL" ColumnName="NOMBREESTABLEFETAL" />
+                <ScalarProperty Name="PROVINCIAFETAL" ColumnName="PROVINCIAFETAL" />
+                <ScalarProperty Name="CANTONFETAL" ColumnName="CANTONFETAL" />
+                <ScalarProperty Name="PARROQUIAFETAL" ColumnName="PARROQUIAFETAL" />
+                <ScalarProperty Name="LOCALIDADFETAL" ColumnName="LOCALIDADFETAL" />
+                <ScalarProperty Name="CAUSAFETAL" ColumnName="CAUSAFETAL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MADRE">
+            <EntityTypeMapping TypeName="DefuncionFetalModel.MADRE">
+              <MappingFragment StoreEntitySet="MADRE">
+                <ScalarProperty Name="CI_MADRE" ColumnName="CI_MADRE" />
+                <ScalarProperty Name="NOMBREMADRE" ColumnName="NOMBREMADRE" />
+                <ScalarProperty Name="NACIONALMADRE" ColumnName="NACIONALMADRE" />
+                <ScalarProperty Name="FECHANACIMIMADRE" ColumnName="FECHANACIMIMADRE" />
+                <ScalarProperty Name="EDADMADRE" ColumnName="EDADMADRE" />
+                <ScalarProperty Name="HIJOSVIVEN" ColumnName="HIJOSVIVEN" />
+                <ScalarProperty Name="HIJOSMUERTOSVIVEN" ColumnName="HIJOSMUERTOSVIVEN" />
+                <ScalarProperty Name="HIJOSMUERTOS" ColumnName="HIJOSMUERTOS" />
+                <ScalarProperty Name="NUMCONTROLES" ColumnName="NUMCONTROLES" />
+                <ScalarProperty Name="AUTOMADRE" ColumnName="AUTOMADRE" />
+                <ScalarProperty Name="ESTADOCIVIL" ColumnName="ESTADOCIVIL" />
+                <ScalarProperty Name="LECTURA" ColumnName="LECTURA" />
+                <ScalarProperty Name="NIVELINSTRUCCIONMADRE" ColumnName="NIVELINSTRUCCIONMADRE" />
+                <ScalarProperty Name="PROVINCIAMADRE" ColumnName="PROVINCIAMADRE" />
+                <ScalarProperty Name="CANTONMADRE" ColumnName="CANTONMADRE" />
+                <ScalarProperty Name="PARROQUIAMADRE" ColumnName="PARROQUIAMADRE" />
+                <ScalarProperty Name="CIUDADMADRE" ColumnName="CIUDADMADRE" />
+                <ScalarProperty Name="DIREMADRE" ColumnName="DIREMADRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEDICO">
+            <EntityTypeMapping TypeName="DefuncionFetalModel.MEDICO">
+              <MappingFragment StoreEntitySet="MEDICO">
+                <ScalarProperty Name="CI_MEDICO" ColumnName="CI_MEDICO" />
+                <ScalarProperty Name="NOMBREMEDICO" ColumnName="NOMBREMEDICO" />
+                <ScalarProperty Name="NUMTELEMEDICO" ColumnName="NUMTELEMEDICO" />
+                <ScalarProperty Name="FIRMAMEDICO" ColumnName="FIRMAMEDICO" />
+                <ScalarProperty Name="OBSERMEDICO" ColumnName="OBSERMEDICO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REGISTROCIVIL">
+            <EntityTypeMapping TypeName="DefuncionFetalModel.REGISTROCIVIL">
+              <MappingFragment StoreEntitySet="REGISTROCIVIL">
+                <ScalarProperty Name="IDREGISTROCIVIL" ColumnName="IDREGISTROCIVIL" />
+                <ScalarProperty Name="DIRECCIONRESGISTRO" ColumnName="DIRECCIONRESGISTRO" />
+                <ScalarProperty Name="NOMBREREGISTRO" ColumnName="NOMBREREGISTRO" />
+                <ScalarProperty Name="OFICINAREGISTRO" ColumnName="OFICINAREGISTRO" />
+                <ScalarProperty Name="PARROQUIAREGISTRO" ColumnName="PARROQUIAREGISTRO" />
+                <ScalarProperty Name="CANTONREGISTRO" ColumnName="CANTONREGISTRO" />
+                <ScalarProperty Name="PROVINCIAREGISTRO" ColumnName="PROVINCIAREGISTRO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
